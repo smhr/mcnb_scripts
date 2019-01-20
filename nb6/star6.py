@@ -71,10 +71,10 @@ for line in fileinput.input(['fort.83']) :
 			k14 = k14 + 1
 		elif a[1] == "15" :
 			k15 = k15 + 1
-                else :
-                        print 'ERROR'
-                        print (line)
-                        exit ()
+		else:
+			print ('ERROR')
+			print (line)
+			sexit ()
 		WD = k10 + k11 + k12
 		N_all = k0 + k1 + k2 + k3 + k4 + k5 + k6 + k7 + k8 + k9 + WD + k13 + k14 + k15
 	elif a[0] == "##" and a[1] == "END" : 
