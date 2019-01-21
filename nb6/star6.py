@@ -21,6 +21,9 @@ k13 = 0 # Number of neutron stars (KSTAR = 13)
 k14 = 0 # Number of Black holes (KSTAR = 14)
 k15 = 0
 N_all = 0
+Ltot = 0 # Total luminosity in solar luminosity unit
+Mtot = 0 # Total mass in solar luminosity unit
+MtoL = 0 # Mass to light ratio
 #          0.0   104285  86952  17332      0      0      0      0      0      0      0      0      0      0      0      0      0      0  0   104284
 row = '#  Time    Ntot    k0     k1        k2     k3    k4      k5     k6     k7     k8     k9     k10    k11    k12     WD    k13    k14 k15  N_all'
 remnant_f.write(row + newline)
@@ -37,6 +40,9 @@ for line in fileinput.input(['fort.83']) :
 		#print Ntot, Time
 	elif a[0]!= "##" : 
 		#print a[1],"******"
+		Ltot = Ltot + 10.**float(a[4])
+		Mtot = Mtot + float(a[3])
+		MtoL = Mtot/Ltot
 		if a[1] == "0" :
 			#print a[0],a[1],"@@@@"
 			k0 = k0 + 1 
@@ -78,10 +84,10 @@ for line in fileinput.input(['fort.83']) :
 		WD = k10 + k11 + k12
 		N_all = k0 + k1 + k2 + k3 + k4 + k5 + k6 + k7 + k8 + k9 + WD + k13 + k14 + k15
 	elif a[0] == "##" and a[1] == "END" : 
-		remnant_f.write ( '%9.1f %8d %6d %6d %6d %6d %6d %6d %6d %6d %6d %6d %6d %6d %6d %6d %6d %6d %2d %8d \n' \
-		  % (Time, Ntot, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, WD, k13, k14, k15, N_all) )
-		print ( '%9.1f %8d %6d %6d %6d %6d %6d %6d %6d %6d %6d %6d %6d %6d %6d %6d %6d %6d %2d %8d \n' % \
-		  (Time, Ntot, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, WD, k13, k14, k15, N_all) )
+		remnant_f.write ( '%9.1f %8d %6d %6d %6d %6d %6d %6d %6d %6d %6d %6d %6d %6d %6d %6d %3d %3d %2d %8d %8.1f %8.1f %8.5f\n' \
+		  % (Time, Ntot, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, WD, k13, k14, k15, N_all, Ltot, Mtot, MtoL) )
+		print ( '%9.1f %8d %6d %6d %6d %6d %6d %6d %6d %6d %6d %6d %6d %6d %6d %6d %3d %3d %2d %8d %8.1f %8.1f %8.5f\n' % \
+		  (Time, Ntot, k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, WD, k13, k14, k15, N_all, Ltot, Mtot, MtoL) )
 		
 		k0 = 0 # Number of deeply or fully convective low mass ms star
 		k1 = 0 # Number of main sequence stars
@@ -101,4 +107,7 @@ for line in fileinput.input(['fort.83']) :
 		k14 = 0 # Number of Black holes (KSTAR = 14)
 		k15 = 0
 		N_all = 0
+		Ltot = 0 # Total luminosity in solar luminosity unit
+		Mtot = 0 # Total mass in solar luminosity unit
+		MtoL = 0 # Mass to light ratio
 		
